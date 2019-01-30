@@ -4,55 +4,83 @@ import axios from 'axios';
 export default class Edit extends Component {
     constructor(props) {
         super(props);
-        this.onChangePersonName = this.onChangePersonName.bind(this);
-        this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
-        this.onChangeGstNumber = this.onChangeGstNumber.bind(this);
+        this.onChangeFirstname = this.onChangeFirstname.bind(this);
+        this.onChangeLastname = this.onChangeLastname.bind(this);
+        this.onChangeAddress = this.onChangeAddress.bind(this);
+        this.onChangeContact = this.onChangeContact.bind(this);
+        this.onChangeBirthday = this.onChangeBirthday.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            person_name: '',
-            business_name: '',
-            business_gst_number:''
+            Firstname: '',
+            Lastname: '',
+            Address: '',
+            Contact: '',
+            Birthday: '',
+            Email: ''
         }
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/business/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:4000/user/edit/'+this.props.match.params.id)
             .then(response => {
                 this.setState({
-                    person_name: response.data.person_name,
-                    business_name: response.data.business_name,
-                    business_gst_number: response.data.business_gst_number });
+                    Firstname: response.data.Firstname,
+                    Lastname: response.data.Lastname,
+                    Address: response.data.Address,
+                    Contact: response.data.Contact,
+                    Birthday: response.data.Birthday,
+                    Email: response.data.Email,
+                });
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
 
-    onChangePersonName(e) {
+    onChangeFirstname(e) {
         this.setState({
-            person_name: e.target.value
+            Firstname: e.target.value
         });
     }
-    onChangeBusinessName(e) {
+    onChangeLastname(e) {
         this.setState({
-            business_name: e.target.value
+            Lastname: e.target.value
         })
     }
-    onChangeGstNumber(e) {
+    onChangeAddress(e) {
         this.setState({
-            business_gst_number: e.target.value
+            Address: e.target.value
+        })
+    }
+    onChangeContact(e) {
+        this.setState({
+            Contact: e.target.value
+        });
+    }
+    onChangeBirthday(e) {
+        this.setState({
+            Birthday: e.target.value
+        })
+    }
+    onChangeEmail(e) {
+        this.setState({
+            Email: e.target.value
         })
     }
 
     onSubmit(e) {
         e.preventDefault();
         const obj = {
-            person_name: this.state.person_name,
-            business_name: this.state.business_name,
-            business_gst_number: this.state.business_gst_number
+            Firstname: this.state.Firstname,
+            Lastname: this.state.Lastname,
+            Address: this.state.Address,
+            Contact: this.state.Contact,
+            Birthday: this.state.Birthday,
+            Email: this.state.Email
         };
-        axios.post('http://localhost:4000/business/update/'+this.props.match.params.id, obj)
+        axios.post('http://localhost:4000/user/update/'+this.props.match.params.id, obj)
             .then(res => console.log(res.data));
 
         this.props.history.push('/index');
@@ -61,36 +89,60 @@ export default class Edit extends Component {
     render() {
         return (
             <div style={{ marginTop: 10 }}>
-                <h3 align="center">Update Business</h3>
+                <h3 align="center">Update User</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label>Person Name:  </label>
+                        <label>First Name:  </label>
                         <input
                             type="text"
                             className="form-control"
-                            value={this.state.person_name}
-                            onChange={this.onChangePersonName}
+                            value={this.state.Firstname}
+                            onChange={this.onChangeFirstname}
                         />
                     </div>
                     <div className="form-group">
-                        <label>Business Name: </label>
+                        <label>Last Name: </label>
                         <input type="text"
                                className="form-control"
-                               value={this.state.business_name}
-                               onChange={this.onChangeBusinessName}
+                               value={this.state.Lastname}
+                               onChange={this.onChangeLastname}
                         />
                     </div>
                     <div className="form-group">
-                        <label>GST Number: </label>
+                        <label>Address: </label>
                         <input type="text"
                                className="form-control"
-                               value={this.state.business_gst_number}
-                               onChange={this.onChangeGstNumber}
+                               value={this.state.Address}
+                               onChange={this.onChangeAddress}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Contact: </label>
+                        <input type="text"
+                               className="form-control"
+                               value={this.state.Contact}
+                               onChange={this.onChangeContact}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Birthday: </label>
+                        <input type="text"
+                               className="form-control"
+                               value={this.state.Birthday}
+                               onChange={this.onChangeBirthday}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Email: </label>
+                        <input type="text"
+                               className="form-control"
+                               value={this.state.Email}
+                               onChange={this.onChangeEmail}
                         />
                     </div>
                     <div className="form-group">
                         <input type="submit"
-                               value="Update Business"
+                               value="Update User"
                                className="btn btn-primary"/>
                     </div>
                 </form>

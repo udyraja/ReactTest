@@ -6,19 +6,19 @@ export default class Index extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {business: []};
+        this.state = {user: []};
     }
     componentDidMount(){
-        axios.get('http://localhost:4000/business')
+        axios.get('http://localhost:4000/user')
             .then(response => {
-                this.setState({ business: response.data });
+                this.setState({ user: response.data });
             })
             .catch(function (error) {
                 console.log(error);
             })
     }
     tabRow(){
-        return this.state.business.map(function(object, i){
+        return this.state.user.map(function(object, i){
             return <TableRow obj={object} key={i} />;
         });
     }
@@ -26,13 +26,16 @@ export default class Index extends Component {
     render() {
         return (
             <div>
-                <h3 align="center">Business List</h3>
+                <h3 align="center">User List</h3>
                 <table className="table table-striped" style={{ marginTop: 20 }}>
                     <thead>
                     <tr>
-                        <th>Person</th>
-                        <th>Business</th>
-                        <th>GST Number</th>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Birthday</th>
+                        <th>Email</th>
                         <th colSpan="2">Action</th>
                     </tr>
                     </thead>

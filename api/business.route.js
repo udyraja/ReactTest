@@ -1,15 +1,15 @@
 const express = require('express');
-const businessRoutes = express.Router();
+const userRoute = express.Router();
 
 // Require Business model in our routes module
-let Business = require('./business.model');
+let User = require('./business.model');
 
 // Defined store route
-businessRoutes.route('/add').post(function (req, res) {
-    let business = new Business(req.body);
-    business.save()
-        .then(business => {
-            res.status(200).json({'business': 'business in added successfully'});
+userRoute.route('/add').post(function (req, res) {
+    let user = new User(req.body);
+    user.save()
+        .then(user => {
+            res.status(200).json({'user': 'user added successfully'});
         })
         .catch(err => {
             res.status(400).send("unable to save to database");
@@ -17,36 +17,40 @@ businessRoutes.route('/add').post(function (req, res) {
 });
 
 // Defined get data(index or listing) route
-businessRoutes.route('/').get(function (req, res) {
-    Business.find(function(err, businesses){
+userRoute.route('/').get(function (req, res) {
+    User.find(function(err, useres){
         if(err){
             console.log(err);
         }
         else {
-            res.json(businesses);
+            res.json(useres);
         }
     });
 });
 
 // Defined edit route
-businessRoutes.route('/edit/:id').get(function (req, res) {
+userRoute.route('/edit/:id').get(function (req, res) {
     let id = req.params.id;
-    Business.findById(id, function (err, business){
-        res.json(business);
+    User.findById(id, function (err, user){
+        res.json(user);
     });
 });
 
 //  Defined update route
-businessRoutes.route('/update/:id').post(function (req, res) {
-    Business.findById(req.params.id, function(err, business) {
-        if (!business)
+userRoute.route('/update/:id').post(function (req, res) {
+    User.findById(req.params.id, function(err, user) {
+        if (!user)
             res.status(404).send("data is not found");
         else {
-            business.person_name = req.body.person_name;
-            business.business_name = req.body.business_name;
-            business.business_gst_number = req.body.business_gst_number;
+            user.Firstname = req.body.Firstname;
+            user.Lastname = req.body.Lastname;
+            user.Address = req.body.Address;
+            user.Contact = req.body.Contact;
+            user.Birthday = req.body.Birthday;
+            user.Email = req.body.Email;
 
-            business.save().then(business => {
+
+            user.save().then(user => {
                 res.json('Update complete');
             })
                 .catch(err => {
@@ -57,11 +61,11 @@ businessRoutes.route('/update/:id').post(function (req, res) {
 });
 
 // Defined delete | remove | destroy route
-businessRoutes.route('/delete/:id').get(function (req, res) {
-    Business.findByIdAndRemove({_id: req.params.id}, function(err, business){
+userRoute.route('/delete/:id').get(function (req, res) {
+    User.findByIdAndRemove({_id: req.params.id}, function(err, user){
         if(err) res.json(err);
         else res.json('Successfully removed');
     });
 });
 
-module.exports = businessRoutes;
+module.exports = userRoute;
