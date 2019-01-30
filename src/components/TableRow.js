@@ -1,3 +1,5 @@
+//Disply the Items in a table to eddit an ddelete
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';

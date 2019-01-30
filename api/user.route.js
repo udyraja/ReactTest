@@ -1,8 +1,8 @@
 const express = require('express');
 const userRoute = express.Router();
 
-// Require Business model in our routes module
-let User = require('./business.model');
+// Require user model in our routes module
+let User = require('./user.model');
 
 // Defined store route
 userRoute.route('/add').post(function (req, res) {
